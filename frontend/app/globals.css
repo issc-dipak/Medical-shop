@@ -1,0 +1,196 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+  background-color: #F8FAFC;
+  color: #0F172A;
+}
+
+body {
+  min-height: 100vh;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.04) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(13, 148, 136, 0.03) 0px, transparent 50%);
+  background-attachment: fixed;
+}
+
+::selection {
+  background: rgba(37, 99, 235, 0.15);
+  color: #0F172A;
+}
+
+:focus-visible {
+  outline: 2px solid #2563EB;
+  outline-offset: 2px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F8FAFC;
+}
+::-webkit-scrollbar-thumb {
+  background: #E2E8F0;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2563EB;
+}
+
+/* Ledger-style table */
+.ledger-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.ledger-table th {
+  text-align: left;
+  font-family: var(--font-plex-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #64748B;
+  padding: 14px 18px;
+  border-bottom: 1px solid #E2E8F0;
+  background: rgba(226, 232, 240, 0.4);
+}
+
+.ledger-table td {
+  padding: 16px 18px;
+  border-bottom: 1px solid #E2E8F0;
+  font-size: 14px;
+  vertical-align: middle;
+  transition: background 0.2s ease;
+}
+
+.ledger-table tr:hover td {
+  background: rgba(15, 23, 42, 0.015);
+}
+
+/* Glassmorphism */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+/* Entrance Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(1.05);
+  }
+}
+
+.glow-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: pulseGlow 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@media print {
+  .no-print,
+  aside,
+  nav,
+  button,
+  .quick-actions,
+  [role="button"] {
+    display: none !important;
+  }
+  
+  html, body, main {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  main {
+    margin-left: 0 !important;
+    padding: 20px !important;
+  }
+
+  /* Reset layout panel grids and spacing */
+  .grid {
+    display: block !important;
+  }
+
+  .grid > * {
+    margin-bottom: 24px !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Optimize card panels for printer ink */
+  .glass-panel, 
+  .bg-panel,
+  section {
+    background: #FFFFFF !important;
+    border: 1px solid #CBD5E1 !important;
+    border-radius: 6px !important;
+    box-shadow: none !important;
+    padding: 16px !important;
+    margin-bottom: 20px !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Force table headers to show clean background color */
+  .ledger-table th {
+    background-color: #F1F5F9 !important;
+    color: #000000 !important;
+    border-bottom: 2px solid #94A3B8 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .ledger-table td {
+    border-bottom: 1px solid #E2E8F0 !important;
+    color: #334155 !important;
+  }
+
+  /* Page break rules */
+  h1, h2, h3, h4 {
+    page-break-after: avoid !important;
+    color: #000000 !important;
+  }
+
+  tr {
+    page-break-inside: avoid !important;
+    page-break-after: auto !important;
+  }
+}
