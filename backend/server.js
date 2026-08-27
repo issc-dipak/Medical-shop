@@ -12,8 +12,25 @@ const tenantRoutes = require("./routes/tenant");
 
 const app = express();
 
-const allowedOrigins = (process.env.CLIENT_ORIGIN || "http://localhost:3000").split(",");
-app.use(cors({ origin: allowedOrigins }));
+const allowedOrigins = (process.env.CLIENT_ORIGIN || "http://localhost:3000,http://127.0.0.1:3000").split(",");
+app.use(cors({
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps, curl, postman)
+    if (!origin) return callback(null, true);
+    
+    const isLocal = origin.startsWith("http://localhost:") || 
+                    origin.startsWith("http://127.0.0.1:") || 
+                    origin === "http://localhost" || 
+                    origin === "http://127.0.0.1";
+                    
+    if (isLocal || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+}));
 app.use(express.json());
 
 app.get("/api/health", (req, res) => res.json({ status: "ok", service: "medledger-backend" }));
