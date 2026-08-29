@@ -8,20 +8,20 @@ import { Badge } from "@/components/Bits";
 
 export default function AppShell({ children, title, eyebrow }) {
   const router = useRouter();
-  
+
   function handleLogout() {
     logout();
     router.push("/login");
   }
   const [session, setSession] = useState(undefined);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  
+
   // Search and Modal states
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedMed, setSelectedMed] = useState(null);
-  
+
   const searchRef = useRef(null);
 
   useEffect(() => {
@@ -85,9 +85,9 @@ export default function AppShell({ children, title, eyebrow }) {
               <rect x="3" y="12" width="24" height="6" fill="#0B0F19" />
             </svg>
           </div>
-          <span className="font-display font-bold text-lg text-ink">MedLedger</span>
+          <span className="font-display font-bold text-lg text-ink">PharmaDesk</span>
         </div>
-        <button 
+        <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
           className="text-ink focus:outline-none p-1 cursor-pointer"
         >
@@ -103,14 +103,14 @@ export default function AppShell({ children, title, eyebrow }) {
 
       {/* Backdrop overlay for mobile menu drawer */}
       {sidebarOpen && (
-        <div 
-          className="md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-30" 
+        <div
+          className="md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-30"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       <Sidebar session={session} isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      
+
       <main className="flex-1 md:ml-[240px] px-4 py-6 md:px-10 md:py-9 w-full animate-fade-in-up">
         {/* Top Header */}
         <div className="hidden md:flex items-center justify-between border-b border-line pb-5 mb-8 no-print">
@@ -119,7 +119,7 @@ export default function AppShell({ children, title, eyebrow }) {
             <h2 className="text-xl font-bold text-ink mt-1.5">Good Morning, {session?.name?.split(" ")[0] || "Dipak"}</h2>
           </div>
           <div className="flex items-center gap-4">
-            
+
             {/* Global Search */}
             <div ref={searchRef} className="relative w-64">
               <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-muted pointer-events-none">
@@ -133,7 +133,7 @@ export default function AppShell({ children, title, eyebrow }) {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => searchQuery.trim().length >= 2 && setShowDropdown(true)}
                 placeholder="Search medicines..."
-                className="w-full pl-9 pr-4 py-1.5 bg-panel border border-line rounded-lg text-[13px] text-ink placeholder:text-muted/50 focus:border-teal outline-none transition-all shadow-sm"
+                className="w-full pl-9 pr-4 py-1.5 bg-white border border-line rounded-lg text-[13px] text-ink placeholder:text-muted/40 focus:border-accent focus:ring-2 focus:ring-accent/15 outline-none transition-all shadow-sm"
               />
 
               {/* Floating Dropdown Results */}
@@ -170,17 +170,17 @@ export default function AppShell({ children, title, eyebrow }) {
                 </div>
               )}
             </div>
-            
+
             {/* Date Display */}
-            <div className="flex items-center gap-2.5 text-xs text-muted bg-panel border border-line px-3.5 py-1.5 rounded-lg shadow-sm">
-              <svg className="w-4 h-4 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center gap-2.5 text-xs text-muted bg-white border border-line px-3.5 py-1.5 rounded-lg shadow-sm">
+              <svg className="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
               <span className="font-semibold font-mono text-[11px]">{new Date().toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}</span>
             </div>
 
             {/* Notification Bell */}
-            <button className="relative p-1.5 text-muted hover:text-ink bg-panel border border-line rounded-lg shadow-sm hover:border-muted/30 cursor-pointer transition-all">
+            <button className="relative p-1.5 text-muted hover:text-ink bg-white border border-line rounded-lg shadow-sm hover:border-muted/30 cursor-pointer transition-all">
               <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-brick rounded-full" />
               <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
@@ -188,12 +188,12 @@ export default function AppShell({ children, title, eyebrow }) {
             </button>
 
             {/* Divider */}
-            <div className="h-6 w-px bg-line" />
+            <div className="h-6 w-px bg-line/80" />
 
             {/* Profile & Sign Out */}
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2">
-                <div className="h-8.5 w-8.5 rounded-full bg-teal-light text-teal flex items-center justify-center font-bold text-xs shadow-sm border border-teal/15 shrink-0">
+                <div className="h-8.5 w-8.5 rounded-full bg-accent-light text-accent flex items-center justify-center font-bold text-xs shadow-sm border border-accent/20 shrink-0">
                   {session?.name?.charAt(0).toUpperCase() || "U"}
                 </div>
                 <div className="hidden lg:block text-left">
@@ -201,10 +201,10 @@ export default function AppShell({ children, title, eyebrow }) {
                   <div className="text-[9px] font-mono uppercase tracking-wider text-muted mt-0.5 leading-none">{session?.role}</div>
                 </div>
               </div>
-              
+
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-muted hover:text-brick bg-panel border border-line rounded-lg shadow-sm hover:bg-paper hover:border-muted/30 transition-all cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-muted hover:text-brick bg-white border border-line rounded-lg shadow-sm hover:bg-brick-light hover:border-brick/20 transition-all cursor-pointer"
               >
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -236,8 +236,8 @@ export default function AppShell({ children, title, eyebrow }) {
                 <h3 className="text-base font-bold">{selectedMed.name}</h3>
                 <span className="text-[10px] tracking-wider uppercase font-semibold text-white/80">{selectedMed.category || "General"}</span>
               </div>
-              <button 
-                onClick={() => setSelectedMed(null)} 
+              <button
+                onClick={() => setSelectedMed(null)}
                 className="text-white hover:text-white/80 transition-colors p-1 cursor-pointer"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

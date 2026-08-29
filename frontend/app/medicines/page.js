@@ -118,8 +118,8 @@ export default function MedicinesPage() {
       {error && <p className="text-brick text-sm mb-4">{error}</p>}
       <div className={isAdmin ? "grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-8 items-start" : "w-full"}>
         {isAdmin && (
-          <form onSubmit={handleSubmit} className="glass-panel rounded-md p-5 flex flex-col gap-3 sticky top-9 shadow-card">
-            <h2 className="font-display text-lg font-semibold mb-1">
+          <form onSubmit={handleSubmit} className="glass-panel rounded-xl p-6 flex flex-col gap-3.5 sticky top-9 shadow-lg border border-white/60 bg-white/95">
+            <h2 className="font-display text-lg font-bold mb-1 text-slate-800 border-b border-line pb-1.5">
               {editingId ? "Edit medicine" : "Add medicine"}
             </h2>
 
@@ -147,10 +147,10 @@ export default function MedicinesPage() {
               </Field>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <Field label="Purchase Price (₹)">
+              <Field label="Purchase (₹)">
                 <input type="number" min="0" step="0.01" className={inputClass} value={form.purchasePrice} onChange={(e) => handleChange("purchasePrice", e.target.value)} required />
               </Field>
-              <Field label="Selling Price (₹)">
+              <Field label="Selling (₹)">
                 <input type="number" min="0" step="0.01" className={inputClass} value={form.price} onChange={(e) => handleChange("price", e.target.value)} required />
               </Field>
             </div>

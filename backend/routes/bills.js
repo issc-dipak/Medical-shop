@@ -7,8 +7,13 @@ const { auth } = require("../middleware/auth");
 const router = express.Router();
 
 async function generateBillNumber(tenantId) {
-  const count = await Bill.countDocuments({ tenantId });
-  return `BILL-${String(count + 1).padStart(4, "0")}`;
+  const lastBill = await Bill.findOne({ tenantId }).sort({ billNumber: -1 });
+  if (!lastBill) {
+    return "BILL-0001";
+  }
+  const match = lastBill.billNumber.match(/BILL-(\d+)/);
+  const nextNum = match ? parseInt(match[1], 10) + 1 : 1;
+  return `BILL-${String(nextNum).padStart(4, "0")}`;
 }
 
 // GET /api/bills
@@ -71,19 +76,34 @@ router.post("/", auth, async (req, res) => {
       );
     }
 
-    const billNumber = await generateBillNumber(req.user.tenantId);
-    const bill = await Bill.create({
-      billNumber,
-      customerName: customer ? customer.name : customerName || "Walk-in customer",
-      customerPhone: customerPhone || "",
-      items: billItems,
-      subtotal,
-      gstTotal,
-      grandTotal,
-      paymentStatus: paymentStatus || "Paid",
-      createdBy: req.user?.username || "",
-      tenantId: req.user.tenantId,
-    });
+    let bill;
+    let retries = 3;
+    while (retries > 0) {
+      try {
+        const billNumber = await generateBillNumber(req.user.tenantId);
+        bill = await Bill.create({
+          billNumber,
+          customerName: customer ? customer.name : customerName || "Walk-in customer",
+          customerPhone: customerPhone || "",
+          items: billItems,
+          subtotal,
+          gstTotal,
+          grandTotal,
+          paymentStatus: paymentStatus || "Paid",
+          createdBy: req.user?.username || "",
+          tenantId: req.user.tenantId,
+        });
+        break;
+      } catch (err) {
+        if (err.code === 11000 && (err.message.includes("billNumber") || JSON.stringify(err.keyValue || {}).includes("billNumber"))) {
+          retries--;
+          if (retries === 0) throw err;
+          await new Promise((resolve) => setTimeout(resolve, Math.random() * 50 + 10));
+        } else {
+          throw err;
+        }
+      }
+    }
 
     // Deduct stock for each item.
     await Promise.all(

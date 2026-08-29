@@ -21,7 +21,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata = {
-  title: "MedLedger — Medical Shop Management System",
+  title: "PharmaDesk — Medical Shop Management System",
   description: "Billing, stock, customer and expiry management for medical shops.",
 };
 

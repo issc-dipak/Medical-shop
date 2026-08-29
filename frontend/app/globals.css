@@ -15,9 +15,7 @@ html, body {
 
 body {
   min-height: 100vh;
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.04) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(13, 148, 136, 0.03) 0px, transparent 50%);
+  background-color: #F1F5F9;
   background-attachment: fixed;
 }
 
@@ -26,7 +24,7 @@ body {
   color: #0F172A;
 }
 
-:focus-visible {
+:focus-visible:not(input):not(textarea):not(select) {
   outline: 2px solid #2563EB;
   outline-offset: 2px;
 }

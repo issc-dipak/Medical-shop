@@ -12,17 +12,11 @@ const tenantRoutes = require("./routes/tenant");
 
 const app = express();
 
-const allowedOrigins = (process.env.CLIENT_ORIGIN || "http://localhost:3000,http://127.0.0.1:3000").split(",");
+const allowedOrigins = (process.env.CLIENT_ORIGIN || "http://localhost:3000,http://localhost:3001,http://127.0.0.1:3000,http://127.0.0.1:3001").split(",");
 app.use(cors({
   origin: function (origin, callback) {
-    // allow requests with no origin (like mobile apps, curl, postman)
     if (!origin) return callback(null, true);
-    
-    const isLocal = origin.startsWith("http://localhost:") || 
-                    origin.startsWith("http://127.0.0.1:") || 
-                    origin === "http://localhost" || 
-                    origin === "http://127.0.0.1";
-                    
+    const isLocal = origin.startsWith("http://localhost:") || origin.startsWith("http://127.0.0.1:");
     if (isLocal || allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
@@ -33,7 +27,7 @@ app.use(cors({
 }));
 app.use(express.json());
 
-app.get("/api/health", (req, res) => res.json({ status: "ok", service: "medledger-backend" }));
+app.get("/api/health", (req, res) => res.json({ status: "ok", service: "pharmadesk-backend" }));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/medicines", medicineRoutes);
@@ -54,5 +48,5 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 
 connectDB().then(() => {
-  app.listen(PORT, () => console.log(`MedLedger API running on http://localhost:${PORT}`));
+  app.listen(PORT, () => console.log(`PharmaDesk API running on http://localhost:${PORT}`));
 });

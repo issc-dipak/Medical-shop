@@ -16,6 +16,29 @@ router.post("/register", async (req, res) => {
     }
 
     const emailTrimmed = email.toLowerCase().trim();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailTrimmed)) {
+      return res.status(400).json({ message: "Please provide a valid email address." });
+    }
+
+    if (/[0-9]/.test(ownerName)) {
+      return res.status(400).json({ message: "Owner name cannot contain numbers." });
+    }
+
+    if (mobile && !/^\d{10}$/.test(mobile)) {
+      return res.status(400).json({ message: "Mobile number must be exactly 10 digits." });
+    }
+
+    if (gstNumber && !/^[A-Z0-9]{15}$/i.test(gstNumber)) {
+      return res.status(400).json({ message: "GSTIN must be exactly 15 alphanumeric characters." });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({ message: "Password must be at least 6 characters long." });
+    }
+
+
     const existingUser = await User.findOne({ 
       $or: [
         { username: emailTrimmed },
@@ -130,6 +153,24 @@ router.post("/staff", auth, requireAdmin, async (req, res) => {
     }
 
     const emailTrimmed = email.toLowerCase().trim();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailTrimmed)) {
+      return res.status(400).json({ message: "Please provide a valid email address." });
+    }
+
+    if (/[0-9]/.test(name)) {
+      return res.status(400).json({ message: "Name cannot contain numbers." });
+    }
+
+    if (mobile && !/^\d{10}$/.test(mobile)) {
+      return res.status(400).json({ message: "Mobile number must be exactly 10 digits." });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({ message: "Password must be at least 6 characters long." });
+    }
+
     const existing = await User.findOne({ 
       $or: [
         { username: emailTrimmed },

@@ -13,25 +13,25 @@ module.exports = {
         muted: "#64748B",
         line: "#E2E8F0",
         teal: {
-          DEFAULT: "#2563EB",
-          dark: "#1D4ED8",
-          light: "rgba(37, 99, 235, 0.08)",
+          DEFAULT: "#0891B2",
+          dark: "#0E7490",
+          light: "rgba(8, 145, 178, 0.06)",
         },
         amber: {
-          DEFAULT: "#F59E0B",
-          light: "rgba(245, 158, 11, 0.08)",
+          DEFAULT: "#D97706",
+          light: "rgba(217, 119, 6, 0.06)",
         },
         brick: {
-          DEFAULT: "#DC2626",
-          light: "rgba(220, 38, 38, 0.08)",
+          DEFAULT: "#E11D48",
+          light: "rgba(225, 29, 72, 0.06)",
         },
         sage: {
-          DEFAULT: "#16A34A",
-          light: "rgba(22, 163, 74, 0.08)",
+          DEFAULT: "#059669",
+          light: "rgba(5, 150, 105, 0.06)",
         },
         accent: {
-          DEFAULT: "#0D9488",
-          light: "rgba(13, 148, 136, 0.1)",
+          DEFAULT: "#0F766E",
+          light: "rgba(15, 118, 110, 0.08)",
         }
       },
       fontFamily: {
