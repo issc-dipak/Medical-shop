@@ -140,6 +140,29 @@ export default function Sidebar({ session, isOpen, onClose }) {
           );
         })}
       </nav>
+
+      {/* Profile Card at Sidebar Bottom */}
+      <div className="p-4 border-t border-line bg-paper flex items-center justify-between gap-3 mt-auto">
+        <div className="flex items-center gap-2.5 overflow-hidden">
+          <div className="h-9 w-9 rounded-full bg-accent-light text-accent flex items-center justify-center font-bold text-sm shadow-sm border border-accent/20 shrink-0">
+            {session?.name?.charAt(0).toUpperCase() || "U"}
+          </div>
+          <div className="text-left overflow-hidden">
+            <div className="text-[13px] font-semibold text-ink truncate leading-snug">{session?.name}</div>
+            <div className="text-[10px] font-mono uppercase tracking-wider text-muted leading-none mt-0.5">{session?.role}</div>
+          </div>
+        </div>
+        
+        <button
+          onClick={handleLogout}
+          title="Sign Out"
+          className="p-2 rounded-lg text-muted hover:text-brick hover:bg-brick-light border border-line/65 hover:border-brick/20 transition-all cursor-pointer shrink-0 bg-white shadow-sm"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+        </button>
+      </div>
     </aside>
   );
 }
