@@ -15,14 +15,7 @@ const app = express();
 const allowedOrigins = (process.env.CLIENT_ORIGIN || "http://localhost:3000,http://localhost:3001,http://127.0.0.1:3000,http://127.0.0.1:3001,https://medical-shop-two.vercel.app").split(",");
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    const isLocal = origin.startsWith("http://localhost:") || origin.startsWith("http://127.0.0.1:");
-    const isVercel = origin.endsWith(".vercel.app");
-    if (isLocal || isVercel || allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes("*")) {
-      callback(null, true);
-    } else {
-      callback(null, false);
-    }
+    callback(null, true);
   },
   credentials: true
 }));
