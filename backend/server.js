@@ -30,7 +30,7 @@ if (process.env.CLIENT_ORIGIN) {
   });
 }
 
-app.use(cors({
+const corsOptions = {
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
     const isAllowed = allowedOrigins.includes(origin) || 
@@ -44,9 +44,13 @@ app.use(cors({
     }
   },
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
   optionsSuccessStatus: 200
-}));
+};
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 app.use(express.json());
 
 app.get("/api/health", (req, res) => res.json({ status: "ok", service: "pharmadesk-backend" }));
