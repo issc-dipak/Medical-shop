@@ -12,7 +12,7 @@ const tenantRoutes = require("./routes/tenant");
 
 const app = express();
 
-const allowedOrigins = (process.env.CLIENT_ORIGIN || "http://localhost:3000,http://localhost:3001,http://127.0.0.1:3000,http://127.0.0.1:3001").split(",");
+const allowedOrigins = (process.env.CLIENT_ORIGIN || "http://localhost:3000,http://localhost:3001,http://127.0.0.1:3000,http://127.0.0.1:3001,https://medical-shop-two.vercel.app").split(",");
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
@@ -21,7 +21,7 @@ app.use(cors({
     if (isLocal || isVercel || allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes("*")) {
       callback(null, true);
     } else {
-      callback(new Error("Not allowed by CORS"));
+      callback(null, false);
     }
   },
   credentials: true
